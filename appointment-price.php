@@ -10,7 +10,7 @@ include('includes/connection.php');
     <div class="content">
         <div class="row">
             <div class="col-sm-4 col-3">
-                <h4 class="page-title">Appointment Price</h4>
+                <h4 class="page-title">Appointment Price </h4>
             </div>
             <?php
             if ($_SESSION['role'] == 1) { ?>
@@ -40,7 +40,13 @@ include('includes/connection.php');
                         $id = $_GET['ids'];
                         $delete_query = mysqli_query($connection, "delete from tbl_price where id='$id'");
                     }
-                    $fetch_query = mysqli_query($connection, "SELECT tp.id, concat(te.first_name, ' ' , te.last_name) as doctor_name, te.department_name, tp.sub_total, tp.status, tp.file FROM tbl_price as tp INNER JOIN tbl_employee as te ON tp.doctor_id = te.id");
+                    $query = "SELECT tp.id, concat(te.first_name, ' ' , te.last_name) as doctor_name, te.department_name, tp.sub_total, tp.status, tp.file FROM tbl_price as tp INNER JOIN tbl_employee as te ON tp.doctor_id = te.id";
+
+                    // IF the user is Doctor
+                    if ($_SESSION['role'] == 2) {
+                        $query = "SELECT tp.id, concat(te.first_name, ' ' , te.last_name) as doctor_name, te.department_name, tp.sub_total, tp.status, tp.file FROM tbl_price as tp INNER JOIN tbl_employee as te ON tp.doctor_id = te.id WHERE tp.doctor_id = ". $_SESSION['auth']['id'];
+                    }
+                    $fetch_query = mysqli_query($connection, $query);
                     while ($row = mysqli_fetch_array($fetch_query)) {
                     ?>
                         <tr>
@@ -48,7 +54,7 @@ include('includes/connection.php');
                             <td><?php echo $row['doctor_name']; ?></td>
                             <td><?php echo $row['sub_total']; ?></td>
                             <td>
-                                <img src="<?= BASE_URL.'/assets/uploads/' . $row['file']; ?>" alt="file QR CODE" width="100">
+                                <img src="<?= BASE_URL . '/assets/uploads/' . $row['file']; ?>" alt="file QR CODE" width="100">
                             </td>
                             <td>
                                 <?php

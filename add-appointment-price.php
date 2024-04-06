@@ -82,7 +82,7 @@ if (isset($_REQUEST['add-appointment'])) {
     <div class="content">
         <div class="row">
             <div class="col-sm-4 ">
-                <h4 class="page-title">Add Appointment - Price</h4>
+                <h4 class="page-title">Add Appointment - Price </h4>
 
             </div>
             <div class="col-sm-8  text-right m-b-20">

@@ -76,6 +76,7 @@ require_once $basePath .'/includes/connection.php';
                         <li>
                             <a href="appointments.php"><i class="fa fa-calendar"></i> <span>Appointments</span></a>
                         </li>
+                        
 
                     </ul>
                 </div>
