@@ -22,6 +22,7 @@ require_once $basePath .'/includes/connection.php';
     <link rel="stylesheet" type="text/css" href="<?= BASE_URL ?>assets/css/bootstrap-datetimepicker.min.css">
     <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="<?= BASE_URL ?>assets/css/style.css">
+    
 
 </head>
 
@@ -75,6 +76,9 @@ require_once $basePath .'/includes/connection.php';
 
                         <li>
                             <a href="appointments.php"><i class="fa fa-calendar"></i> <span>Appointments</span></a>
+                        </li>
+                        <li>
+                            <a href="invoice-page.php"><i class="fa fa-calendar"></i> <span>invoice-page</span></a>
                         </li>
                         
 

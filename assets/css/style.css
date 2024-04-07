@@ -3282,6 +3282,12 @@ a.status-red {
 	border: 1px solid #fe0000;
 	color: #fe0000;
 }
+.status-yellow,
+a.status-yellow {
+	background-color: #fafe00;
+	border: 1px solid #fafe00;
+	color: #000;
+}
 .status-green,
 a.status-green {
 	background-color: #e5faf3;
