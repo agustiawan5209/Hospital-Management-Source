@@ -81,7 +81,7 @@ include_once('includes/config.php');
                                 <a href="appointments.php"><i class="fa fa-calendar"></i> <span>Appointments</span></a>
                             </li>
                             <li>
-                                <a href="appointment-price.php"><i class="fa fa-calendar"></i> <span>Appointments price</span></a>
+                                <a href="appointment-price.php"><i class="fa fa-user-tag"></i> <span>Appointments price</span></a>
                             </li>
                             <li>
                                 <a href="schedule.php"><i class="fa fa-calendar-check-o"></i> <span>Doctor Schedule</span></a>
@@ -111,10 +111,13 @@ include_once('includes/config.php');
                                 <a href="appointments.php"><i class="fa fa-calendar"></i> <span>Appointments</span></a>
                             </li>
                             <li>
-                                <a href="appointment-price.php"><i class="fa fa-calendar"></i> <span>Appointments price</span></a>
+                                <a href="appointment-price.php"><i class="fa fa-address-card"></i> <span>Appointments price</span></a>
                             </li>
                             <li>
                                 <a href="employees.php"><i class="fa fa-user"></i> <span>Employees</span></a>
+                            </li>
+                            <li>
+                                <a href="medical-records.php"><i class="fa fa-clipboard"></i> <span>Medical Records</span></a>
                             </li>
 
                         </ul>

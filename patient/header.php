@@ -78,7 +78,10 @@ require_once $basePath .'/includes/connection.php';
                             <a href="appointments.php"><i class="fa fa-calendar"></i> <span>Appointments</span></a>
                         </li>
                         <li>
-                            <a href="invoice-page.php"><i class="fa fa-calendar"></i> <span>invoice-page</span></a>
+                            <a href="invoice-page.php"><i class="fa fa-file"></i> <span>invoice-page</span></a>
+                        </li>
+                        <li>
+                            <a href="medical-records.php"><i class="fa fa-clipboard"></i> <span>medical records</span></a>
                         </li>
                         
 

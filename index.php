@@ -226,14 +226,19 @@ include('includes/connection.php');
                 <select name="department_doctor" id="department_doctor" class="box">
                     <option value="">--Select Doctor Department--</option>
                     <?php
-                    $department_app = mysqli_query($connection, "SELECT id, first_name, last_name, dob, gender, phone,department_name
+                    $department_app = mysqli_query($connection, "SELECT *
                     FROM tbl_employee AS employee
                     WHERE role = '2';");
                     while ($row = mysqli_fetch_array($department_app)) {
+                        // Check If The Doctor Has Price
+                        $price_tbl = mysqli_query($connection, "SELECT * FROM tbl_price WHERE doctor_id='" . $row['id']. "'");
+                        
+                        if (mysqli_num_rows($price_tbl) > 0) {
                     ?>
-                        <option value="<?= $row['id'] ?>"><?= $row['first_name'] . " " . $row['last_name'] . " - " . $row['department_name'] ?></option>
+                            <option value="<?= $row['id'] ?>"><?= $row['first_name'] . " " . $row['last_name'] . " - " . $row['department_name'] ?></option>
 
-                    <?php } ?>
+                    <?php }
+                    } ?>
                 </select>
 
                 <div class="form-box">

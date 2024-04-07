@@ -3,6 +3,9 @@ session_start();
 
 
 require_once 'header.php';
+// if ($_SESSION['role'] != 'patient'){
+//     session_destroy();
+// }
 
 ?>
 <div class="page-wrapper">
