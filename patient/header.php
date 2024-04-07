@@ -65,11 +65,11 @@ require_once $basePath .'/includes/connection.php';
         </div>
         <div class="sidebar" id="sidebar">
             <div class="sidebar-inner slimscroll">
-                <div id="sidebar-menu" class="sidebar-menu">
+                <nav id="sidebar-menu" class="sidebar-menu">
 
                     <ul>
 
-                        <li class="active">
+                        <li class="">
                             <a href="dashboard.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                         </li>
 
@@ -79,7 +79,7 @@ require_once $basePath .'/includes/connection.php';
                         
 
                     </ul>
-                </div>
+                </nav>
             </div>
         </div>
     </div>

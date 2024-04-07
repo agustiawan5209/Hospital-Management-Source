@@ -24,22 +24,41 @@
         $('#datetimepicker4').datetimepicker({
             format: 'LT'
         });
+        function addActiveClass() {
+        const currentUrl = window.location.pathname.replace(/patient\//, "");;
+        const links = document.querySelectorAll("nav li a");
+
+        for (const link of links) {
+            const href = link.getAttribute("href");
+            const basename = '/' + href.split("/").pop();
+
+            console.log(basename)
+            console.log(currentUrl)
+            if (basename === currentUrl) {
+                link.parentNode.classList.add("active");
+            }
+        }
+    }
+
+    addActiveClass();
     });
     <?php
     if (isset($_SESSION['message'])) {
     ?>
         swal({
             title: "Wow!",
-            text: <?= "'". $_SESSION['message'] . "'"?>,
+            text: <?= "'" . $_SESSION['message'] . "'" ?>,
             type: "success"
-        }).then(okay=> {
-            if(okay){
-                <?php unset($_SESSION['message']);?>
+        }).then(okay => {
+            if (okay) {
+                <?php unset($_SESSION['message']); ?>
             }
         });
     <?php
     }
     ?>
+
+   
 </script>
 
 </body>

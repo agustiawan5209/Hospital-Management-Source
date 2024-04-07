@@ -24,7 +24,7 @@ if (isset($_REQUEST['login'])) {
     } else {
         // Jika tidak ditemukan di tabel tbl_employee, cek di tabel tbl_patient
         $fetch_query_patient = mysqli_query($connection, "SELECT * FROM tbl_patient  WHERE username ='$username' AND password = '$pwd'");
-        
+
         $patient_res = mysqli_num_rows($fetch_query_patient);
         if ($patient_res > 0) {
             $data_patient = mysqli_fetch_array($fetch_query_patient);
@@ -45,20 +45,17 @@ if (isset($_REQUEST['login'])) {
                 }
 
                 // Get data Doktor And Departemen By ID
-                $department_app = mysqli_query($connection, "SELECT employee.id, employee.first_name, employee.last_name,employee.dob,employee.gender, employee.phone,department.department_name, employee.department_id
-                    FROM tbl_employee AS employee
-                    INNER JOIN tbl_department AS department ON employee.department_id = department.id
-                    WHERE employee.id =" . $_SESSION['data_schedule']['department_doctor']);
+                $department_app = mysqli_query($connection, "SELECT *  FROM tbl_employee WHERE id =" . $_SESSION['data_schedule']['department_doctor']);
 
                 $data_department = mysqli_fetch_assoc($department_app);
-                
-                $doctor_name = $name_patient. ','. $_SESSION['data_schedule']['dob'];
+
+                $doctor_name = $name_patient . ',' . $_SESSION['data_schedule']['dob'];
                 $department_name = $data_department['department_name'];
                 $doctor_id = $data_department['id'];
                 $department_name = $data_department['department_name'];
 
                 $appointment_id = 'APT-' . $apt_id;
-                $patient_name = $data_patient['first_name'] . ' '. $data_patient['last_name'];
+                $patient_name = $data_patient['first_name'] . ' ' . $data_patient['last_name'];
                 $doctor = $_SESSION['data_schedule']['doctor'];
                 $date = $_SESSION['data_schedule']['date'];
                 $time = $_SESSION['data_schedule']['time'];
@@ -68,6 +65,8 @@ if (isset($_REQUEST['login'])) {
 
                 // insert data appointment from patient where user is not login before
                 $insert_query = mysqli_query($connection, "insert into tbl_appointment set appointment_id='$appointment_id', patient_name='$patient_name',patient_id='$patient_id', department='$department_name', doctor='$doctor_name', doctor_id='$doctor_id', date='$date',  time='$time', message='$message', status='$status'");
+
+                makeAppointmentPrice($appointment_id, $connection, $doctor_id);
 
                 if ($insert_query > 0) {
                     $msg = "Appointment created successfully";
@@ -82,7 +81,6 @@ if (isset($_REQUEST['login'])) {
         } else {
             $_SESSION['message'] = 'username dan password salah';
             header('location: ' . BASE_URL . '/login.php');
-
         }
     }
 }
@@ -116,10 +114,7 @@ if (isset($_POST['submit-appointment'])) {
         }
 
         // Get data Doktor And Departemen By ID
-        $department_app = mysqli_query($connection, "SELECT employee.id, employee.first_name, employee.last_name,employee.dob,employee.gender, employee.phone,department.department_name, employee.department_id
-            FROM tbl_employee AS employee
-            INNER JOIN tbl_department AS department ON employee.department_id = department.id
-            WHERE employee.id =" . $_POST['department_doctor']);
+        $department_app = mysqli_query($connection, "SELECT * FROM tbl_employee  WHERE id =" . $_POST['department_doctor']);
 
         $data_department = mysqli_fetch_assoc($department_app);
         $doctor_name = $data_department['first_name'] . ' ' . $data_department['last_name'];
@@ -128,7 +123,7 @@ if (isset($_POST['submit-appointment'])) {
         $department_name = $data_department['department_name'];
 
         $appointment_id = 'APT-' . $apt_id;
-        $patient_name =  $_SESSION['auth']['first_name'] . ' '. $_SESSION['auth']['last_name'] . ','. $_REQUEST['dob'];
+        $patient_name =  $_SESSION['auth']['first_name'] . ' ' . $_SESSION['auth']['last_name'] . ',' . $_REQUEST['dob'];
         $doctor = $_REQUEST['doctor'];
         $date = $_REQUEST['date'];
         $time = $_REQUEST['time'];
@@ -138,6 +133,8 @@ if (isset($_POST['submit-appointment'])) {
 
         // insert data appointment from patient where user is not login before
         $insert_query = mysqli_query($connection, "insert into tbl_appointment set appointment_id='$appointment_id', patient_name='$patient_name',patient_id='$patient_id', department='$department_name', doctor='$doctor_name', doctor_id='$doctor_id', date='$date',  time='$time', message='$message', status='$status'");
+        makeAppointmentPrice($appointment_id, $connection, $doctor_id);
+
 
         if ($insert_query > 0) {
             $msg = "Appointment created successfully";
@@ -149,4 +146,14 @@ if (isset($_POST['submit-appointment'])) {
         }
         header('location: ' . BASE_URL . 'patient/dashboard.php');
     }
+}
+
+function makeAppointmentPrice($appointment_id, $connection, $doctor_id)
+{
+
+    $query_price = mysqli_query($connection, 'select * from tbl_price where doctor_id= ' . $doctor_id);
+    $doctor = mysqli_fetch_assoc($query_price);
+    $sub_total = $doctor['sub_total'];
+    // insert data appointment from patient where user is not login before
+    $insert_query = mysqli_query($connection, "insert into tbl_appointment_price set appointment_id='$appointment_id', status= 'PENDING', sub_total='$sub_total'");
 }

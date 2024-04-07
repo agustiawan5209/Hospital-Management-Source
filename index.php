@@ -226,10 +226,9 @@ include('includes/connection.php');
                 <select name="department_doctor" id="department_doctor" class="box">
                     <option value="">--Select Doctor Department--</option>
                     <?php
-                    $department_app = mysqli_query($connection, "SELECT employee.id, employee.first_name, employee.last_name,employee.dob,employee.gender, employee.phone,department.department_name
+                    $department_app = mysqli_query($connection, "SELECT id, first_name, last_name, dob, gender, phone,department_name
                     FROM tbl_employee AS employee
-                    INNER JOIN tbl_department AS department ON employee.department_id = department.id
-                    WHERE employee.role = '2';");
+                    WHERE role = '2';");
                     while ($row = mysqli_fetch_array($department_app)) {
                     ?>
                         <option value="<?= $row['id'] ?>"><?= $row['first_name'] . " " . $row['last_name'] . " - " . $row['department_name'] ?></option>
@@ -252,7 +251,7 @@ include('includes/connection.php');
                     <input type="time" id="time" name="time" class="box" placeholder="appointment time">
                 </div>
 
-              
+
 
 
                 <input type="text" name="message" class="box" placeholder="send message to doctor">
@@ -260,7 +259,7 @@ include('includes/connection.php');
             </form>
 
         </div>
-       
+
 
     </section>
 
@@ -275,10 +274,7 @@ include('includes/connection.php');
 
         <div class="box-container">
             <?php
-            $fetch_query = mysqli_query($connection, "SELECT employee.id, employee.first_name, employee.last_name, employee.username,employee.emailid,employee.dob,employee.gender,employee.address,employee.bio, employee.phone,department.department_name
-FROM tbl_employee AS employee
-INNER JOIN tbl_department AS department ON employee.department_id = department.id
-WHERE employee.role = '2';");
+            $fetch_query = mysqli_query($connection, "SELECT id, first_name, last_name, username, emailid, dob, gender, address, bio, phone,department_name FROM tbl_employee  WHERE role = '2';");
             while ($row = mysqli_fetch_array($fetch_query)) {
             ?>
                 <div class="box">
