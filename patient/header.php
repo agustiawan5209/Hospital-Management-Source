@@ -13,7 +13,7 @@ require_once $basePath .'/includes/connection.php';
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <link rel="shortcut icon" type="image/x-icon" href="<?= BASE_URL ?>assets/img/favicon.ico">
-    <title>HMS</title>
+    <title>Klinik MB</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="<?= BASE_URL ?>assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<?= BASE_URL ?>assets/css/font-awesome.min.css">
@@ -31,7 +31,7 @@ require_once $basePath .'/includes/connection.php';
         <div class="header">
             <div class="header-left">
                 <a href="dashboard.php" class="logo">
-                    <img src="<?= BASE_URL ?>/assets/img/logo.png" width="35" height="35" alt=""> <span>HMS</span>
+                    <img src="<?= BASE_URL ?>/assets/img/logo.png" width="35" height="35" alt=""> <span>Klinik MB</span>
                 </a>
             </div>
             <a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>

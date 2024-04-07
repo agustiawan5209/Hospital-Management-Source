@@ -4,7 +4,6 @@ if (empty($_SESSION['name'])) {
     header('location:login.php');
 }
 include('header.php');
-include('includes/connection.php');
 ?>
 <div class="page-wrapper">
     <div class="content">
@@ -31,7 +30,6 @@ include('includes/connection.php');
                         <th>Complaints</th>
                         <th>Diagnoses</th>
                         <th>Medical Drugs</th>
-                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,7 +38,8 @@ include('includes/connection.php');
                         $id = $_GET['ids'];
                         $delete_query = mysqli_query($connection, "delete from tbl_medical_records where id='$id'");
                     }
-                    $sql = "SELECT * FROM tbl_medical_records";
+                    $id_patient = $_SESSION['auth']['id'];
+                    $sql = "SELECT * FROM tbl_medical_records where patient_id='$id_patient'";
                     $result = mysqli_query($connection, $sql);
                     $no = 1;
                     if (mysqli_num_rows($result) > 0) {
@@ -57,15 +56,6 @@ include('includes/connection.php');
                                 <td><?= $row['complaints'] ?></td>
                                 <td><?= $row['diagnoses'] ?></td>
                                 <td><?= $row['medical_drugs'] ?></td>
-                                <td class="text-right">
-                                    <div class="dropdown dropdown-action">
-                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="edit-medical-record.php?id=<?php echo $row['id']; ?>"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                            <a class="dropdown-item" href="appointments.php?ids=<?php echo $row['id']; ?>" onclick="return confirmDelete()"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                        </div>
-                                    </div>
-                                </td>
                             </tr>
                     <?php
                         }
