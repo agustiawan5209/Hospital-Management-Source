@@ -49,7 +49,7 @@ if (isset($_REQUEST['edit-patient'])) {
     <div class="content">
         <div class="row">
             <div class="col-sm-4 ">
-                <h4 class="page-title">Edit Patient</h4>
+                <h4 class="page-title">Edit Medical Records</h4>
 
             </div>
             <div class="col-sm-8  text-right m-b-20">

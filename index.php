@@ -30,7 +30,7 @@ include('includes/connection.php');
 
     <header class="header">
 
-        <a href="#" class="logo text-white"> <i class="fas fa-heartbeat"></i> <strong>WC</strong>medical </a>
+        <a href="#" class="logo text-white"> <img src="assets/img/logo-dark.png" alt="" width="30"> KLINIK <strong>MB</strong> </a>
 
         <nav class="navbar">
             <a href="#home">home</a>

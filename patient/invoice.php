@@ -76,7 +76,7 @@ if (isset($_POST["submit-payment"])) {
     <div class="content">
         <div class="row">
             <div class="col-sm-4 ">
-                <h4 class="page-title">Show Appointment</h4>
+                <h4 class="page-title">Show INVOICE</h4>
             </div>
             <div class="col-sm-8  text-right m-b-20">
                 <a href="appointments.php" class="btn btn-primary btn-rounded float-right">Back</a>

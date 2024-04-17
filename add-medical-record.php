@@ -37,7 +37,7 @@ VALUES ( '$patient_id','$patient_name', '$gender', '$phone', '$date', '$dob', '$
     <div class="content">
         <div class="row">
             <div class="col-sm-4 ">
-                <h4 class="page-title">Add Patient</h4>
+                <h4 class="page-title">Add Medical Records</h4>
 
             </div>
             <div class="col-sm-8  text-right m-b-20">

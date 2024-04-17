@@ -120,9 +120,12 @@ if (isset($_REQUEST['save-appointment'])) {
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="display-block">Appointment Status</label>
-                                <p>
-                                    <?= $row['status'] ?>
-                                </p>
+                                <?php if ($row['status'] == 1) { ?>
+                                <p><span class="custom-badge status-green">Finish</span></p>
+                            <?php } else { ?>
+                                <p><span class="custom-badge status-red">Unfinished</span></p>
+                            <?php } 
+                            ?>
                             </div>
                         </div>
                     </div>

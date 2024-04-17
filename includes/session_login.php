@@ -49,13 +49,13 @@ if (isset($_REQUEST['login'])) {
 
                 $data_department = mysqli_fetch_assoc($department_app);
 
-                $doctor_name = $name_patient . ',' . $_SESSION['data_schedule']['dob'];
+                $doctor_name = $name_patient ;
                 $department_name = $data_department['department_name'];
                 $doctor_id = $data_department['id'];
                 $department_name = $data_department['department_name'];
 
                 $appointment_id = 'APT-' . $apt_id;
-                $patient_name = $data_patient['first_name'] . ' ' . $data_patient['last_name'];
+                $patient_name = $data_patient['first_name'] . ' ' . $data_patient['last_name'] . ',' . $_SESSION['data_schedule']['dob'];
                 $doctor = $_SESSION['data_schedule']['doctor'];
                 $date = $_SESSION['data_schedule']['date'];
                 $time = $_SESSION['data_schedule']['time'];

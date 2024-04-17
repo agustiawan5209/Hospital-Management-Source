@@ -3,6 +3,7 @@
 
 
 <!-- login23:11-->
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
@@ -17,23 +18,24 @@
 	<![endif]-->
 </head>
 
-<?php 
+<?php
 session_start();
 include("includes/config.php");
-if(isset($_SESSION["auth"])){
+if (isset($_SESSION["auth"])) {
     header('location: ' . BASE_URL . 'patient/dashboard.php');
-
 }
 ?>
 
 <body>
     <div class="main-wrapper account-wrapper">
         <div class="account-page">
-			<div class="account-center">
-				<div class="account-box">
+            <div class="account-center">
+                <div class="account-box">
                     <form action="includes/session_login.php" method="post" class="form-signin">
-						<div class="account-logo">
-                            <a href="index-2.html"><img src="assets/img/logo-dark.png" alt=""></a>
+                        <div class="account-logo">
+                            <a href="/"><img src="assets/img/logo-dark.png" alt=""></a>
+                            <a href="/" class="logo text-dark"></i> KLINIK <strong>MB</strong> </a>
+
                         </div>
                         <div class="form-group">
                             <label>Username</label>
@@ -43,45 +45,48 @@ if(isset($_SESSION["auth"])){
                             <label>Password</label>
                             <input type="password" class="form-control" name="pwd" required>
                         </div>
-                        <span style="color:red;"><?php if(!empty($msg)){ echo $msg; } ?></span>
+                        <span style="color:red;"><?php if (!empty($msg)) {
+                                                        echo $msg;
+                                                    } ?></span>
                         <br>
                         <div class="form-group text-center">
                             <button type="submit" name="login" class="btn btn-primary account-btn">Login</button>
                         </div>
-                        
+
                     </form>
                     <div class="text-center register-link">
                         Belum punya akun? <a href="register.php">Daftar disini</a>
                     </div>
                 </div>
-			</div>
+            </div>
         </div>
     </div>
     <script src="assets/js/jquery-3.2.1.min.js"></script>
-	<script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/app.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script>
-         <?php
-    if (isset($_SESSION['message'])) {
-    ?>
-        swal({
-            title: "Wow!",
-            text: <?= "'". $_SESSION['message'] . "'"?>,
-            type: "success"
-        }).then(okay=> {
-            if(okay){
-                <?php unset($_SESSION['message']);?>
-            }
-        });
-    <?php
-    }
-    ?>
+        <?php
+        if (isset($_SESSION['message'])) {
+        ?>
+            swal({
+                title: "Wow!",
+                text: <?= "'" . $_SESSION['message'] . "'" ?>,
+                type: "success"
+            }).then(okay => {
+                if (okay) {
+                    <?php unset($_SESSION['message']); ?>
+                }
+            });
+        <?php
+        }
+        ?>
     </script>
 </body>
 
 
 <!-- login23:12-->
+
 </html>

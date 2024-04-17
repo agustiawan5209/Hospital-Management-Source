@@ -10,10 +10,10 @@ include('includes/connection.php');
     <div class="content">
         <div class="row">
             <div class="col-sm-4 col-3">
-                <h4 class="page-title">Patients</h4>
+                <h4 class="page-title">Medical Records</h4>
             </div>
             <div class="col-sm-8 col-9 text-right m-b-20">
-                <a href="add-medical-record.php" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Patient</a>
+                <a href="add-medical-record.php" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Medical Records</a>
             </div>
         </div>
         <div class="table-responsive">

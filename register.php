@@ -60,7 +60,8 @@ if(isset($_POST['register'])) {
                 <div class="account-box">
                     <form method="post" class="form-signin">
                         <div class="account-logo">
-                            <a href="index-2.html"><img src="assets/img/logo-dark.png" alt=""></a>
+                        <a href="/"><img src="assets/img/logo-dark.png" alt=""></a>
+                            <a href="/" class="logo text-dark"></i> KLINIK <strong>MB</strong> </a>
                         </div>
                         <div class="form-group">
                             <label>Nama Depan</label>

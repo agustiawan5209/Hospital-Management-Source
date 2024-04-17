@@ -8,7 +8,7 @@ include('header.php');
     <div class="content">
         <div class="row">
             <div class="col-sm-4 col-3">
-                <h4 class="page-title">Appointments </h4>
+                <h4 class="page-title">INVOICE PAGE </h4>
             </div>
         </div>
         <div class="table-responsive">
@@ -28,28 +28,40 @@ include('header.php');
                 </thead>
                 <tbody>
                     <?php
-                    $no=1;
+                    $no = 1;
                     if (isset($_GET['ids'])) {
                         $id = $_GET['ids'];
                         $delete_query = mysqli_query($connection, "delete from tbl_appointment where id='$id'");
                     }
-                    $fetch_query = mysqli_query($connection, "SELECT ta.id, ta.appointment_id, ta.patient_name, ta.patient_id, ta.doctor_id, ta.doctor,ta.date, ta.department, ta.status AS ta_status, tap.status AS payment_status, tap.sub_total FROM tbl_appointment AS ta INNER JOIN tbl_appointment_price AS tap ON ta.appointment_id = tap.appointment_id WHERE ta.patient_id=". $_SESSION['auth']['id']);
+                    $fetch_query = mysqli_query($connection, "SELECT ta.id, ta.appointment_id, ta.patient_name, ta.patient_id, ta.doctor_id, ta.doctor,ta.date, ta.department, ta.status AS ta_status, tap.status AS payment_status, tap.sub_total FROM tbl_appointment AS ta INNER JOIN tbl_appointment_price AS tap ON ta.appointment_id = tap.appointment_id WHERE ta.patient_id=" . $_SESSION['auth']['id']);
                     while ($row = mysqli_fetch_array($fetch_query)) {
 
 
                     ?>
                         <tr>
-                            <td><?= $no++?></td>
+                            <td><?= $no++ ?></td>
                             <td><?php echo $row['appointment_id']; ?></td>
                             <td><?php echo $row['patient_name']; ?></td>
                             <td><?php echo $row['doctor'] . '/' . $row['department'];; ?></td>
                             <td><?php echo $row['date']; ?></td>
-                           
+
                             <td>
-                            <span class="custom-badge status-red"><?= $row['payment_status'] ?></span>
+                                <?php
+                                $status = 'red';
+                                if ($row['payment_status'] == 'PENDING') {
+                                    $status = 'red';
+                                }
+                                if ($row['payment_status'] == 'FINISH') {
+                                    $status = 'green';
+                                }
+                                if ($row['payment_status'] == 'FAILED') {
+                                    $status = 'yellow';
+                                }
+                                ?>
+                                <span class="custom-badge status-<?= $status ?>"><?= $row['payment_status'] ?></span>
                             </td>
                             <td class="nowrap">
-                            <span class="custom-badge"><?= $row['sub_total'] ?></span>
+                                <span class="custom-badge"><?= $row['sub_total'] ?></span>
                             </td>
                             <td class="text-right">
                                 <div class="dropdown dropdown-action">
