@@ -41,7 +41,7 @@ include('includes/connection.php');
                 <div class="dash-widget">
                     <span class="dash-widget-bg3"><i class="fa fa-user-md" aria-hidden="true"></i></span>
                     <?php
-                    $fetch_query = mysqli_query($connection, "select count(*) as total from tbl_appointment where status=1");
+                    $fetch_query = mysqli_query($connection, "select count(*) as total from tbl_appointment where status=1 and deleted_at = 0");
                     $attend = mysqli_fetch_row($fetch_query);
                     ?>
                     <div class="dash-widget-info text-right">

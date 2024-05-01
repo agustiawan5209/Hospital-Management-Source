@@ -34,7 +34,7 @@ include('header.php');
                     <?php
                     if (isset($_GET['ids'])) {
                         $id = $_GET['ids'];
-                        $delete_query = mysqli_query($connection, "delete from tbl_appointment where id='$id'");
+                        $delete_query = mysqli_query($connection, "update tbl_appointment set deleted_at = 1 where id='$id'");
                     }
                     $fetch_query = mysqli_query($connection, "select * from tbl_appointment where patient_id=". $_SESSION['auth']['id']);
                     while ($row = mysqli_fetch_array($fetch_query)) {

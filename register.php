@@ -40,7 +40,7 @@ if(isset($_POST['register'])) {
         if(mysqli_num_rows($existingUserResult) > 0) {
             $msg = "Username sudah digunakan, silakan coba dengan username lain.";
         } else {
-            $insert_query = "insert into tbl_patient set first_name='$first_name', last_name='$last_name', username='$username', email='$emailid', password='$pwd', dob='$dob', gender='$gender', patient_type='OutPatient', address='$address', phone='$phone', role=4, status=0";
+            $insert_query = "insert into tbl_patient set first_name='$first_name', last_name='$last_name', username='$username', email='$emailid', password='$pwd', dob='$dob', gender='$gender', patient_type='OutPatient', address='$address', phone='$phone',  status=0";
             if(mysqli_query($connection, $insert_query)) {
                 $msg = "Registrasi berhasil";
                 header("Location: login.php");

@@ -6,7 +6,7 @@ if (empty($_SESSION['name']) || $_SESSION['role'] != 1) {
 include('header.php');
 include('includes/connection.php');
 
-$fetch_query = mysqli_query($connection, "select max(id) as id from tbl_appointment");
+$fetch_query = mysqli_query($connection, "select max(id) as id from tbl_appointment WHERE deleted_at = null");
 $row = mysqli_fetch_row($fetch_query);
 if ($row[0] == 0) {
     $apt_id = 1;

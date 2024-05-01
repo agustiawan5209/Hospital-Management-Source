@@ -7,9 +7,9 @@ include('header.php');
 if (isset($_REQUEST['add-appointment'])) {
 
     $appointment_id = $_REQUEST['appointment_id'];
-    $patient = explode(',', $_REQUEST['patient_name']);
-    $patient_name = $patient[1] . ',' . $patient[2];
-    $patient_id = $patient[0];
+    $patient = $_REQUEST['patient_name'];
+    $patient_name = $patient . ','. $_REQUEST['dob'];
+    $patient_id = $_REQUEST['patient_id'];
 
     $department = $_REQUEST['department'];
     $doctor = explode(',', $_REQUEST['doctor']);

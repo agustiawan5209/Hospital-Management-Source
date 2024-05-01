@@ -19,7 +19,8 @@ if ($date != "" && $selected_department != '') {
     $cekDataPengguna = mysqli_query($connection, "SELECT count(id) as jml FROM `tbl_appointment` WHERE patient_id ='" . $role_id . "' AND date = '" . $date . "' AND department LIKE '%" . $selected_department . "%' AND NOT id='$apt_id'");
     $cej = mysqli_fetch_row($cekDataPengguna);
 
-    // if exists message will be false;
+    // if exists the message will be false;
+    
     if ($cej[0] == 0) {
         $fetch_query = mysqli_query($connection, "select count(id) as jumlah from tbl_appointment where date = '" . $date . "' AND department LIKE '%" . $selected_department . "%'");
         $row = mysqli_fetch_row($fetch_query);
