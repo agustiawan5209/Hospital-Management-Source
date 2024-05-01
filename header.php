@@ -15,7 +15,8 @@ include_once('includes/config.php');
 
     <link rel="stylesheet" type="text/css" href="<?= BASE_URL ?>assets/css/select2.min.css">
     <link rel="stylesheet" type="text/css" href="<?= BASE_URL ?>assets/css/bootstrap-datetimepicker.min.css">
-    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" type="text/css" href="<?= BASE_URL ?>assets/css/style.css">
 
 </head>
