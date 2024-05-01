@@ -6,7 +6,7 @@ include('includes/connection.php');
 $selected_doctor = $_POST['doctor'];
 
 // Query untuk mengambil jadwal dokter yang sesuai dengan nama dokter yang dipilih
-$query = "SELECT available_days, start_time, end_time FROM tbl_schedule WHERE doctor_name = '$selected_doctor'";
+$query = "SELECT available_days, start_time, end_time FROM tbl_schedule WHERE doctor_id = '$selected_doctor'";
 $result = mysqli_query($connection, $query);
 
 // Buat dropdown jadwal dokter dengan hasil query

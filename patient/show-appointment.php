@@ -175,7 +175,11 @@ include('footer.php');
 
     <?php
     if (isset($msg)) {
-        echo 'swal("' . $msg . '");';
+        echo 'swal({
+            icon: "success",
+            title: "success",
+            text: "' . $msg . '",
+        });';
     }
     ?>
 </script>

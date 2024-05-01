@@ -23,7 +23,7 @@ if (isset($_REQUEST['add-appointment'])) {
     $status = $_REQUEST['status'];
 
 
-    $insert_query = mysqli_query($connection, "insert into tbl_appointment set appointment_id='$appointment_id', patient_id='$patient_id',patient_name='$patient_name', department='$department', doctor='$doctor[1]',doctor_id='$doctor[0]',  date='$date',  time='$time', message='$message', status='$status'");
+    $insert_query = mysqli_query($connection, "insert into tbl_appointment set appointment_id='$appointment_id', patient_id='$patient_id',patient_name='$patient_name', available_days='$available_days', department='$department', doctor='$doctor[1]',doctor_id='$doctor[0]',  date='$date',  time='$time', message='$message', status='$status'");
 
     if ($insert_query > 0) {
         $msg = "Appointment created successfully";
@@ -66,15 +66,10 @@ if (isset($_REQUEST['add-appointment'])) {
                                     <?php } ?>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label>dirth of birthday</label>
-                                <div class="cal-icon">
-                                    <input type="text" class="form-control datetimepicker" name="dob" id="dob" required readonly>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="row">
+                        
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Date</label>
@@ -117,6 +112,14 @@ if (isset($_REQUEST['add-appointment'])) {
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Available Days</label>
+                                        <select class="select" name="available_days" id="available_days" required>
+                                            <option value="">Select Available Days</option>
+                                        </select>
+                                    </div>
+                                </div>
                     </div>
 
                     <div class="row">
@@ -172,21 +175,20 @@ include('footer.php');
             var patient_name = $('#patient_name').val();
             if (patient_name !== '') {
                 var patient_id = String(patient_name).split(',');
-                $('#dob').val(patient_id[2]);
                 $.ajax({
                     type: "POST",
                     url: "code-appointment.php",
                     data: {
                         department: selectedOption,
                         date: inputValue,
-                        patient_id: patient_id[0]
+                        patient_id: patient_id[0],
+                        // id: null,
                     },
                     cache: false,
                     success: function(response) {
                         console.log(response)
                         if (response !== '') {
                             const elem = JSON.parse(response);
-                            console.log(elem.msg)
                             if (elem.msg) {
                                 $('#appointment_id').val(elem.code);
                             } else {
@@ -238,7 +240,11 @@ include('footer.php');
 
     <?php
     if (isset($msg)) {
-        echo 'swal("' . $msg . '");';
+        echo 'swal({
+            icon: "success",
+            title: "success",
+            text: "' . $msg . '",
+        });';
     }
     ?>
 </script>
