@@ -20,7 +20,7 @@ if (isset($_REQUEST['login'])) {
         $_SESSION['name'] = $name;
         $_SESSION['role'] = $role;
         $_SESSION['auth'] = $data;
-        header('location: ' . BASE_URL . 'dashboard.php');
+        header('location: /' . BASE_URL . 'dashboard.php');
     } else {
         // Jika tidak ditemukan di tabel tbl_employee, cek di tabel tbl_patient
         $fetch_query_patient = mysqli_query($connection, "SELECT * FROM tbl_patient  WHERE username ='$username' AND password = '$pwd'");
@@ -77,7 +77,7 @@ if (isset($_REQUEST['login'])) {
                 }
             }
 
-            header('location: ' . BASE_URL . 'patient/dashboard.php');
+            header('location: ' . BASE_URL . '/patient/dashboard.php');
         } else {
             $_SESSION['message'] = 'username dan password salah';
             header('location: ' . BASE_URL . '/login.php');
@@ -144,7 +144,7 @@ if (isset($_POST['submit-appointment'])) {
         } else {
             $msg = "Error!";
         }
-        header('location: ' . BASE_URL . '/patient/dashboard.php');
+        header('location: ../patient/dashboard.php');
     }
 }
 
