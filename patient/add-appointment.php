@@ -12,7 +12,7 @@ if ($row[0] == 0) {
 }
 if (isset($_REQUEST['add-appointment'])) {
 
-    $appointment_id = 'APT-' . $apt_id;
+    $appointment_id = $_REQUEST['appointment_id'];
     $patient_name = $_REQUEST['patient_name'] . ',' . $_REQUEST['dob'];
     $patient_id = $_REQUEST['patient_id'];
 
@@ -25,15 +25,15 @@ if (isset($_REQUEST['add-appointment'])) {
     $status = 0;
     $app_price = makeAppointmentPrice($appointment_id, $connection, $doctor[0]);
 
-    if($app_price){
+    if ($app_price) {
         $insert_query = mysqli_query($connection, "insert into tbl_appointment set appointment_id='$appointment_id', patient_id='$patient_id',patient_name='$patient_name', department='$department', doctor='$doctor[1]',doctor_id='$doctor[0]',  date='$date',  time='$time', message='$message', status='$status'");
 
-    if ($insert_query > 0) {
-        $msg = "Appointment created successfully";
+        if ($insert_query > 0) {
+            $msg = "Appointment created successfully";
+        } else {
+            $msg = "Error!";
+        }
     } else {
-        $msg = "Error!";
-    }
-    }else{
         $msg = "Cannot Add Appointment : Appoinment could not be held because the price had not been determined";
     }
 }
@@ -47,7 +47,7 @@ function makeAppointmentPrice($appointment_id, $connection, $doctor_id)
         // insert data appointment from patient where user is not login before
         $insert_query = mysqli_query($connection, "insert into tbl_appointment_price set appointment_id='$appointment_id', status= 'PENDING', sub_total='$sub_total'");
         return true;
-    }else{
+    } else {
         return false;
     }
 }
@@ -70,13 +70,11 @@ function makeAppointmentPrice($appointment_id, $connection, $doctor_id)
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Appointment ID <span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" name="appointment_id" value="<?php if (!empty($apt_id)) {
-                                                                                                            echo 'APT-' . $apt_id;
-                                                                                                        } else {
-                                                                                                            echo "APT-1";
-                                                                                                        } ?>" disabled>
+                                <input class="form-control" type="text" id="appointment_id" name="appointment_id" readonly>
+                                <small class="form-text text-muted">Insert Department And Date Schedule For value Appointment ID</small>
                             </div>
                         </div>
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Patient Name</label>
@@ -87,6 +85,24 @@ function makeAppointmentPrice($appointment_id, $connection, $doctor_id)
                                 <label>dirth of birthday</label>
                                 <div class="cal-icon">
                                     <input type="text" class="form-control datetimepicker" value="<?= $_SESSION['auth']['dob'] ?>" readonly name="dob" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Date</label>
+                                <div class="cal-icon">
+                                    <input type="text" class="form-control datetimepicker" id="date_appointment" name="date" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Time</label>
+                                <div class="time-icon">
+                                    <input type="text" class="form-control" id="datetimepicker3" name="time" required>
                                 </div>
                             </div>
                         </div>
@@ -116,25 +132,7 @@ function makeAppointmentPrice($appointment_id, $connection, $doctor_id)
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Date</label>
-                                <div class="cal-icon">
-                                    <input type="text" class="form-control datetimepicker" name="date" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Time</label>
-                                <div class="time-icon">
-                                    <input type="text" class="form-control" id="datetimepicker3" name="time" required>
-                                </div>
-                            </div>
-                        </div>
 
-                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -160,17 +158,43 @@ include('footer.php');
 ?>
 <script type="text/javascript">
     $(document).ready(function() {
+        function getAppoinmentID() {
+            var selectedOption = $('#department').val();
+            var inputValue = $('#date_appointment').val();
+            $.ajax({
+                type: "POST",
+                url: "/code-appointment.php",
+                data: {
+                    department: selectedOption,
+                    date: inputValue,
+                },
+                cache: false,
+                success: function(response) {
+                    const elem = JSON.parse(response);
+                    console.log(elem.msg)
+                    if(elem.msg){
+                        $('#appointment_id').val(elem.code);
+                    }else{
+                        swal('Maaf Data Appointment Sudah Tersedia')
+                    }
+                },
+                error: (err) => {
+                    console.log(err)
+                }
+            });
+        }
         $('#department').change(function() {
             var selected_department = $(this).val();
             $.ajax({
                 type: "POST",
                 url: "/fetch-doctor.php",
                 data: {
-                    department: selected_department
+                    department: selected_department,
                 },
                 cache: false,
                 success: function(response) {
                     $('#doctor').html(response);
+                    getAppoinmentID();
                 }
             });
         });
@@ -188,6 +212,9 @@ include('footer.php');
                 }
             });
         });
+        $('#date_appointment').on('dp.change', function(e) {
+            getAppoinmentID()
+        })
     });
 
     <?php

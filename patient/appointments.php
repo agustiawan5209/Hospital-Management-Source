@@ -74,7 +74,7 @@ include('header.php');
                                     <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item" href="show-appointment.php?id=<?php echo $row['id']; ?>"><i class="fa fa-eye m-r-5"></i> show</a>
-                                        <!-- <a class="dropdown-item" href="appointments.php?ids=<?php echo $row['id']; ?>" onclick="return confirmDelete()"><i class="fa fa-trash-o m-r-5"></i> Delete</a> -->
+                                        <a class="dropdown-item" href="appointments.php?ids=<?php echo $row['id']; ?>" onclick="return confirmDelete()"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                     </div>
                                 </div>
                             </td>
