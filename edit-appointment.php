@@ -25,7 +25,7 @@ if (isset($_REQUEST['save-appointment'])) {
     $dob = $_REQUEST['dob'];
     $patient_name = $_REQUEST['patient_name'] . "," . $dob;
     $department = $_REQUEST['department'];
-    $doctor = $_REQUEST['doctor'];
+    $doctor = explode(',', $_REQUEST['doctor']);
     $available_days = $_REQUEST['available_days'];
     $date = $_REQUEST['date'];
     $time = $_REQUEST['time'];
@@ -34,7 +34,7 @@ if (isset($_REQUEST['save-appointment'])) {
 
 
     try {
-        $update_query = mysqli_query($connection, "update tbl_appointment set appointment_id='$appointment_id', patient_name='$patient_name', department='$department' , available_days='$available_days', doctor='$doctor',   date='$date',  time='$time', message='$message', status='$status' where id='$id'");
+        $update_query = mysqli_query($connection, "update tbl_appointment set appointment_id='$appointment_id', patient_name='$patient_name', department='$department' , available_days='$available_days', doctor='$doctor[1]',doctor_id='$doctor[0]',date='$date',  time='$time', message='$message', status='$status' where id='$id'");
         if ($update_query > 0) {
             $msg = "Appointment updated successfully";
             $fetch_query = mysqli_query($connection, "select * from tbl_appointment where id='$id'");
