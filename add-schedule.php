@@ -7,16 +7,16 @@ include('header.php');
 include('includes/connection.php');
 
 if (isset($_REQUEST['add-schedule'])) {
-    $department = $_REQUEST['department'];
-    $doctor_id = $_REQUEST['doctor'];
+    $doctor_id = $_REQUEST['department'];
     $days = implode(", ", $_REQUEST['days']);
     $start_time = $_REQUEST['start_time'];
     $end_time = $_REQUEST['end_time'];
     $message = $_REQUEST['message'];
     $status = $_REQUEST['status'];
+    $sesi = $_REQUEST['sesi'];
 
 
-    $insert_query = mysqli_query($connection, "insert into tbl_schedule set doctor_id='$doctor_id', available_days='$days', start_time='$start_time', end_time='$end_time', message='$message', status='$status'");
+    $insert_query = mysqli_query($connection, "insert into tbl_schedule set doctor_id='$doctor_id', available_days='$days', start_time='$start_time', end_time='$end_time', sesi='$sesi', message='$message', status='$status'");
 
     if ($insert_query > 0) {
         $msg = "Schedule created successfully";
@@ -40,30 +40,16 @@ if (isset($_REQUEST['add-schedule'])) {
             <div class="col-lg-8 offset-lg-2">
                 <form method="post">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
-                                <label>Department</label>
+                                <label>Doctor/Department Name</label>
                                 <select class="select" name="department" required>
                                     <option value="">Select</option>
                                     <?php
-                                    $fetch_query = mysqli_query($connection, "select department_name from tbl_department");
+                                    $fetch_query = mysqli_query($connection, "select id, concat(first_name,' ', last_name, '-', department_name) as doctor_department from tbl_employee where role=2");
                                     while ($row = mysqli_fetch_array($fetch_query)) {
                                     ?>
-                                        <option><?php echo $row['department_name']; ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Doctor Name</label>
-                                <select class="select" name="doctor" required>
-                                    <option value="">Select</option>
-                                    <?php
-                                    $fetch_query = mysqli_query($connection, "select id,concat(first_name,' ',last_name) as name from tbl_employee where role=2 and status=1");
-                                    while ($row = mysqli_fetch_array($fetch_query)) {
-                                    ?>
-                                        <option value="<?= $row['id'] ?>"><?php echo $row['name']; ?></option>
+                                        <option value="<?= $row['id']?>"><?php echo $row['doctor_department']; ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -81,6 +67,14 @@ if (isset($_REQUEST['add-schedule'])) {
                                     <option>Friday</option>
                                     <option>Saturday</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Maximal Doctor Appointment per Day </label>
+                                <div class="time-icon">
+                                    <input type="number" class="form-control"  name="sesi" required>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -136,12 +130,12 @@ include('footer.php');
 ?>
 <script type="text/javascript">
     <?php
-    if (isset($msg)) {
+     if (isset($msg)) {
         echo 'swal({
             icon: "success",
             title: "success",
             text: "' . $msg . '",
-        });';
+        }).then(()=>{window.location.href="schedule.php"});';
     }
     ?>
 </script>

@@ -8,23 +8,21 @@ include('includes/connection.php');
 
 $id = $_GET['id'];
 $fetch_query = mysqli_query($connection, "select * from tbl_schedule where id='$id'");
-$row = mysqli_fetch_array($fetch_query);
+$row = mysqli_fetch_assoc($fetch_query);
 
-$query_row_schedule = "SELECT ts.id, te.first_name, te.last_name, concat(te.first_name, ' ', te.last_name) as doctor_name, ts.available_days, ts.start_time, ts.end_time, ts.message, ts.status, ts.created_at, te.department_name, ts.doctor_id FROM `tbl_schedule` as ts INNER JOIN tbl_employee as te ON ts.doctor_id = te.id  WHERE ts.id='$id'";
+// $query_row_schedule = "SELECT ts.id, te.first_name, te.last_name, concat(te.first_name, ' ', te.last_name) as doctor_name, ts.available_days, ts.start_time, ts.end_time, ts.message, ts.status, ts.created_at, te.department_name, ts.doctor_id FROM `tbl_schedule` as ts INNER JOIN tbl_employee as te ON ts.doctor_id = te.id  WHERE ts.id='$id'";
 if (isset($_REQUEST['save-schedule'])) {
-    $department = $_REQUEST['department'];
-    $doctor_id = $_REQUEST['doctor_name'];
+    $doctor_id = $_REQUEST['department'];
     $days = implode(", ", $_REQUEST['days']);
     $start_time = $_REQUEST['start_time'];
     $end_time = $_REQUEST['end_time'];
     $message = $_REQUEST['msg'];
     $status = $_REQUEST['status'];
+    $sesi = $_REQUEST['sesi'];
 
-    $update_query = mysqli_query($connection, "update tbl_schedule set  doctor_id='$doctor_id', available_days='$days', start_time='$start_time', end_time='$end_time', message='$message', status='$status' where id='$id'");
+    $update_query = mysqli_query($connection, "update tbl_schedule set  doctor_id='$doctor_id', available_days='$days', start_time='$start_time', end_time='$end_time', message='$message' , sesi='$sesi', status='$status' where id='$id'");
     if ($update_query > 0) {
         $msg = "Schedule updated successfully";
-        $fetch_query = mysqli_query($connection, $query_row_schedule);
-        $row = mysqli_fetch_array($fetch_query);
         // echo "<script>window.location.href = 'schedule.php'</script>";
     } else {
         $msg = "Error!";
@@ -48,17 +46,14 @@ if (isset($_REQUEST['save-schedule'])) {
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Doctor-Department Name</label>
-                                <select class="select" name="doctor_name" required>
+                                <label>Doctor/Department Name</label>
+                                <select class="select" name="department" required>
                                     <option value="">Select</option>
                                     <?php
-                                    $fetch_query = mysqli_query($connection, $query_row_schedule);
-                                    $schedule = mysqli_fetch_array($fetch_query);
-
-                                    $fetch_query = mysqli_query($connection, "select id,concat(first_name,' ',last_name, ' - ', department_name) as name from tbl_employee as te where status=1 and role=2");
-                                    while ($doc = mysqli_fetch_array($fetch_query)) {
+                                    $fetch_query = mysqli_query($connection, "select id, concat(first_name,' ', last_name, '-', department_name) as doctor_department from tbl_employee where role=2");
+                                    while ($emp_name = mysqli_fetch_array($fetch_query)) {
                                     ?>
-                                        <option <?php if ($doc['id'] == $schedule['doctor_id']) { ?> selected="selected" ; <?php } ?> value="<?= $doc['id'] ?>"><?php echo $doc['name']; ?></option>
+                                        <option value="<?= $emp_name['id'] ?>" <?= $emp_name['id'] == $row['doctor_id'] ? 'selected' : '' ?>><?php echo $emp_name['doctor_department']; ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -86,7 +81,16 @@ if (isset($_REQUEST['save-schedule'])) {
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Maximal Doctor Appointment per Day </label>
+                                <div class="time-icon">
+                                    <input type="number" class="form-control" name="sesi" value="<?= $row['sesi'] ?>" required>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -143,9 +147,12 @@ include('footer.php');
 ?>
 <script type="text/javascript">
     <?php
-    if (isset($msg)) {
-
-        echo 'swal("' . $msg . '");';
+     if (isset($msg)) {
+        echo 'swal({
+            icon: "success",
+            title: "success",
+            text: "' . $msg . '",
+        }).then(()=>{window.location.href="schedule.php"});';
     }
     ?>
 </script>

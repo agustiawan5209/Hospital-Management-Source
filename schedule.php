@@ -24,6 +24,7 @@ include('includes/connection.php');
                                             <th>Doctor Name</th>
                                             <th>Department</th>    
                                             <th>Available Days</th>
+                                            <th>Maximal Appointment</th>
                                             <th>Available Time</th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -43,6 +44,7 @@ include('includes/connection.php');
                                             <td><?php echo $row['first_name'] . " " . $row['last_name']; ?></td>
                                             <td><?php echo $row['department_name']; ?></td>
                                             <td><?php echo $row['available_days']; ?></td>
+                                            <td><?php echo $row['sesi']; ?></td>
                                             <td><?php echo $row['start_time'].' - '.$row['end_time']; ?></td>
                                             <?php if($row['status']==1) { ?>
                                             <td><span class="custom-badge status-green">Active</span></td>

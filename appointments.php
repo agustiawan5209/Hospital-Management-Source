@@ -42,7 +42,7 @@ include('includes/connection.php');
                         $delete_query = mysqli_query($connection, "update tbl_appointment set deleted_at = 1 where id='". $id ."'");
                     }
                     if ($_SESSION["role"] == 1) {
-                        $fetch_query = mysqli_query($connection, "select * from tbl_appointment WHERE deleted_at = 0 ");
+                        $fetch_query = mysqli_query($connection, "select * from tbl_appointment WHERE deleted_at = 0 order by date desc");
                     } else {
                         $fetch_query = mysqli_query($connection, "select * from tbl_appointment where deleted_at = 0  and doctor_id = " . $_SESSION['auth']['id']);
                     }
