@@ -170,13 +170,16 @@ include('footer.php');
                 },
                 cache: false,
                 success: function(response) {
+                    console.log(response)
+                   if(response !== ''){
                     const elem = JSON.parse(response);
-                    console.log(elem.msg)
                     if(elem.msg){
                         $('#appointment_id').val(elem.code);
                     }else{
+                        $('#appointment_id').val(null);
                         swal('Maaf Data Appointment Sudah Tersedia')
                     }
+                   }
                 },
                 error: (err) => {
                     console.log(err)
