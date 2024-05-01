@@ -23,7 +23,7 @@ include('header.php');
                         <th>Age</th>
                         <th>Department</th>
                         <th>Doctor Name</th>
-                        <!-- <th>Available Days</th> -->
+                        <th>Available Days</th>
                         <th>Appointment Date</th>
                         <th>Appointment Time</th>
                         <th>Status</th>
@@ -60,7 +60,7 @@ include('header.php');
                             <td><?php echo $year; ?></td>
                             <td><?php echo $row['department']; ?></td>
                             <td><?php echo $row['doctor']; ?></td>
-                            <!-- <td><?php echo $row['available_days']; ?></td> -->
+                            <td><?php echo $row['available_days']; ?></td>
                             <td><?php echo $row['date']; ?></td>
                             <td><?php echo $time . ' - ' . $timeout; ?></td>
                             <?php if ($row['status'] == 1) { ?>

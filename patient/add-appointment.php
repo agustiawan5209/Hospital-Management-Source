@@ -26,7 +26,7 @@ if (isset($_REQUEST['add-appointment'])) {
     $app_price = makeAppointmentPrice($appointment_id, $connection, $doctor[0]);
 
     if ($app_price) {
-        $insert_query = mysqli_query($connection, "insert into tbl_appointment set appointment_id='$appointment_id', patient_id='$patient_id',patient_name='$patient_name', department='$department', doctor='$doctor[1]',doctor_id='$doctor[0]',  date='$date',  time='$time', message='$message', status='$status'");
+        $insert_query = mysqli_query($connection, "insert into tbl_appointment set appointment_id='$appointment_id', patient_id='$patient_id',patient_name='$patient_name', available_days='$available_days', department='$department', doctor='$doctor[1]',doctor_id='$doctor[0]',  date='$date',  time='$time', message='$message', status='$status'");
 
         if ($insert_query > 0) {
             $msg = "Appointment created successfully";
@@ -131,6 +131,14 @@ function makeAppointmentPrice($appointment_id, $connection, $doctor_id)
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Available Days</label>
+                                <select class="select" name="available_days" id="available_days" required>
+                                    <option>select</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="row">
@@ -171,15 +179,15 @@ include('footer.php');
                 cache: false,
                 success: function(response) {
                     console.log(response)
-                   if(response !== ''){
-                    const elem = JSON.parse(response);
-                    if(elem.msg){
-                        $('#appointment_id').val(elem.code);
-                    }else{
-                        $('#appointment_id').val(null);
-                        swal('Maaf Data Appointment Sudah Tersedia')
+                    if (response !== '') {
+                        const elem = JSON.parse(response);
+                        if (elem.msg) {
+                            $('#appointment_id').val(elem.code);
+                        } else {
+                            $('#appointment_id').val(null);
+                            swal('Maaf Data Appointment Sudah Tersedia')
+                        }
                     }
-                   }
                 },
                 error: (err) => {
                     console.log(err)
@@ -223,7 +231,7 @@ include('footer.php');
     <?php
     if (isset($msg)) {
         echo 'swal({
-            icon: "success",
+            icon: "info",
             title: "success",
             text: "' . $msg . '",
         });';
