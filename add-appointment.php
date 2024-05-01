@@ -22,13 +22,33 @@ if (isset($_REQUEST['add-appointment'])) {
     $message = $_REQUEST['message'];
     $status = $_REQUEST['status'];
 
+    $app_price = makeAppointmentPrice($appointment_id, $connection, $doctor[0]);
 
-    $insert_query = mysqli_query($connection, "insert into tbl_appointment set appointment_id='$appointment_id', patient_id='$patient_id',patient_name='$patient_name', available_days='$available_days', department='$department', doctor='$doctor[1]',doctor_id='$doctor[0]',  date='$date',  time='$time', message='$message', status='$status'");
+    if ($app_price) {
+        $insert_query = mysqli_query($connection, "insert into tbl_appointment set appointment_id='$appointment_id', patient_id='$patient_id',patient_name='$patient_name', available_days='$available_days', department='$department', doctor='$doctor[1]',doctor_id='$doctor[0]',  date='$date',  time='$time', message='$message', status='$status'");
 
     if ($insert_query > 0) {
         $msg = "Appointment created successfully";
     } else {
         $msg = "Error!";
+    }
+    } else {
+        $msg = "Cannot Add Appointment : Appoinment could not be held because the price had not been determined";
+    }
+    
+}
+function makeAppointmentPrice($appointment_id, $connection, $doctor_id)
+{
+
+    $query_price = mysqli_query($connection, 'select * from tbl_price where doctor_id= ' . $doctor_id);
+    if (mysqli_num_rows($query_price) > 0) {
+        $doctor = mysqli_fetch_assoc($query_price);
+        $sub_total = $doctor['sub_total'];
+        // insert data appointment from patient where user is not login before
+        $insert_query = mysqli_query($connection, "insert into tbl_appointment_price set appointment_id='$appointment_id', status= 'PENDING', sub_total='$sub_total'");
+        return true;
+    } else {
+        return false;
     }
 }
 ?>

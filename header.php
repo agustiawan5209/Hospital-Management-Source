@@ -117,9 +117,6 @@ include_once('includes/config.php');
                                 <a href="appointment-price.php"><i class="fa fa-address-card"></i> <span>Appointments price</span></a>
                             </li>
                             <li>
-                                <a href="employees.php"><i class="fa fa-user"></i> <span>Employees</span></a>
-                            </li>
-                            <li>
                                 <a href="medical-records.php"><i class="fa fa-clipboard"></i> <span>Medical Records</span></a>
                             </li>
 

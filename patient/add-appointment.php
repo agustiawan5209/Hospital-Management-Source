@@ -3,13 +3,7 @@ session_start();
 
 include('header.php');
 
-$fetch_query = mysqli_query($connection, "select max(id) as id from tbl_appointment");
-$row = mysqli_fetch_row($fetch_query);
-if ($row[0] == 0) {
-    $apt_id = 1;
-} else {
-    $apt_id = $row[0] + 1;
-}
+
 if (isset($_REQUEST['add-appointment'])) {
 
     $appointment_id = $_REQUEST['appointment_id'];
