@@ -86,6 +86,11 @@ if (isset($_POST["submit-payment"])) {
             <div class="col-lg-8 offset-lg-2">
                 <form action="#" class="card " method="POST" enctype="multipart/form-data">
                     <div class="card-body">
+                        <a href="print-invoice.php?id=<?= $id ?>">
+                            <button type="button" class="btn btn-primary fa-address-book" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Print Invoice
+                            </button>
+                        </a>
                         <div class="row border-bottom">
                             <div class="col-sm-6">
                                 <div class="form-group">
@@ -164,7 +169,7 @@ if (isset($_POST["submit-payment"])) {
                         $tbl_price = mysqli_query($connection, "SELECT * FROM tbl_price where doctor_id = " . $row['doctor_id']);
                         $tbl_prices = mysqli_fetch_assoc($tbl_price);
 
-                        $tbl_tr = mysqli_query($connection, "SELECT * FROM tbl_transaction where appointment_id ='$appointment_id' LIMIT 1 "  );
+                        $tbl_tr = mysqli_query($connection, "SELECT * FROM tbl_transaction where appointment_id ='$appointment_id' LIMIT 1 ");
                         $count_tbl_tr = mysqli_num_rows($tbl_tr);
                         $data_tbl_tr = mysqli_fetch_assoc($tbl_tr);
                         if ($count_tbl_tr < 1) {
@@ -193,25 +198,25 @@ if (isset($_POST["submit-payment"])) {
                                 </div>
                             </div>
 
-                        <?php } else { 
+                        <?php } else {
                             $status = 'red';
-                            if($data_tbl_tr['status'] == 'PENDING') {
+                            if ($data_tbl_tr['status'] == 'PENDING') {
                                 $status = 'red';
                             }
-                            if($data_tbl_tr['status'] == 'FINISH') {
+                            if ($data_tbl_tr['status'] == 'FINISH') {
                                 $status = 'green';
                             }
-                            if($data_tbl_tr['status'] == 'FAILED') {
+                            if ($data_tbl_tr['status'] == 'FAILED') {
                                 $status = 'yellow';
                             }
-                            ?>
+                        ?>
                             <ul class="list-group list-group-horizontal">
                                 <li class="list-group-item">Transaction Code : <?= $data_tbl_tr['tr_code'] ?></li>
                                 <li class="list-group-item">sub-total transactions: <?= $data_tbl_tr['sub_total'] ?></li>
                                 <li class="list-group-item">Transactions Date: <?= $data_tbl_tr['date'] ?></li>
 
-                            
-                                <li class="list-group-item">Transactions status: 
+
+                                <li class="list-group-item">Transactions status:
                                     <span class="custom-badge status-<?= $status ?>"><?= $data_tbl_tr['status'] ?></span>
                                 </li>
                             </ul>

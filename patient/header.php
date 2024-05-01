@@ -12,16 +12,16 @@ require_once $basePath .'/includes/connection.php';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <link rel="shortcut icon" type="image/x-icon" href="<?= BASE_URL ?>assets/img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="<?= BASE_URL ?>/assets/img/favicon.ico">
     <title>Klinik MB</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="<?= BASE_URL ?>assets/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="<?= BASE_URL ?>assets/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="<?= BASE_URL ?>/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="<?= BASE_URL ?>/assets/css/font-awesome.min.css">
 
-    <link rel="stylesheet" type="text/css" href="<?= BASE_URL ?>assets/css/select2.min.css">
-    <link rel="stylesheet" type="text/css" href="<?= BASE_URL ?>assets/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="<?= BASE_URL ?>/assets/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="<?= BASE_URL ?>/assets/css/bootstrap-datetimepicker.min.css">
     <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" href="<?= BASE_URL ?>assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="<?= BASE_URL ?>/assets/css/style.css">
     
 
 </head>
@@ -40,7 +40,7 @@ require_once $basePath .'/includes/connection.php';
                 <li class="nav-item dropdown has-arrow">
                     <a href="#" class="dropdown-toggle nav-link user-link" data-toggle="dropdown">
                         <span class="user-img">
-                            <img class="rounded-circle" src="<?= BASE_URL ?>assets/img/user.jpg" width="24" alt="Admin">
+                            <img class="rounded-circle" src="<?= BASE_URL ?>/assets/img/user.jpg" width="24" alt="Admin">
                             <span class="status online"></span>
                         </span>
                         <?php

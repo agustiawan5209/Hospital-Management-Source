@@ -42,7 +42,11 @@ include('includes/connection.php');
                                         $id = $_GET['ids'];
                                         $delete_query = mysqli_query($connection, "delete from tbl_appointment where id='$id'");
                                         }
-                                        $fetch_query = mysqli_query($connection, "select * from tbl_appointment where doctor_id = " . $_SESSION['auth']['id']);
+                                        if($_SESSION["role"]== 1){
+                                            $fetch_query = mysqli_query($connection, "select * from tbl_appointment") ;
+                                        }else{
+                                            $fetch_query = mysqli_query($connection, "select * from tbl_appointment where doctor_id = " . $_SESSION['auth']['id']);
+                                        }
                                         while($row = mysqli_fetch_array($fetch_query))
                                         {
                                             

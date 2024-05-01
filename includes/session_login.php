@@ -144,7 +144,7 @@ if (isset($_POST['submit-appointment'])) {
         } else {
             $msg = "Error!";
         }
-        header('location: ' . BASE_URL . 'patient/dashboard.php');
+        header('location: ' . BASE_URL . '/patient/dashboard.php');
     }
 }
 
