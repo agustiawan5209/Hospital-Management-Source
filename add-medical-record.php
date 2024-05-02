@@ -9,10 +9,8 @@ include('includes/connection.php');
 if (isset($_REQUEST['add-medical'])) {
 
     $id_patient = $_POST['patient_name'];
-    $query = mysqli_query($connection, "SELECT id, concat(first_name, ' ', last_name) as patient_name FROM tbl_patient WHERE id='$id_patient'");
-    $patient = mysqli_fetch_array($query);
-    $patient_name = $patient['patient_name'];
-    $patient_id = $patient['id'];
+    $patient_name = $_POST['patient_name'];
+    $patient_id = $_POST['patient_id'];
     $gender = $_POST['gender'];
     $dob = $_POST['dob'];
     $phone = $_POST['phone'];
@@ -21,11 +19,11 @@ if (isset($_REQUEST['add-medical'])) {
     $complaints = $_POST['complaints'];
     $diagnoses = $_POST['diagnoses'];
     $medical_drugs = $_POST['medical_drugs'];
-
-
+    $appointment_id = $_POST['appointment_id'];
     $sql = "INSERT INTO tbl_medical_records ( patient_id, patient_name, gender, phone, date, dob, doctor_name, complaints, diagnoses, medical_drugs)
-VALUES ( '$patient_id','$patient_name', '$gender', '$phone', '$date', '$dob', '$doctor_name', '$complaints', '$diagnoses', '$medical_drugs')";
+VALUES ( '$patient_id','$patient_name', '$gender', '$phone', '$date',  '$dob', '$doctor_name', '$complaints', '$diagnoses', '$medical_drugs')";
 
+    $appointment = mysqli_query($connection, "update tbl_appointment set status = 1 where id='$appointment_id' ");
     if (mysqli_query($connection, $sql)) {
         $msg = "berhasil DI Tambah";
     } else {
@@ -54,7 +52,7 @@ VALUES ( '$patient_id','$patient_name', '$gender', '$phone', '$date', '$dob', '$
                                 <select class="form-control" id="appointment_id" name="appointment_id" required>
                                     <option value="">------</option>
                                     <?php
-                                    $fetch_query = mysqli_query($connection, "SELECT id, concat(appointment_id, '||', patient_name, '||',department) as detail FROM `tbl_appointment` where doctor_id = " . $_SESSION['auth']['id']);
+                                    $fetch_query = mysqli_query($connection, "SELECT id, concat(appointment_id, '||', patient_name, '||',department) as detail FROM `tbl_appointment` where status=0 and doctor_id = " . $_SESSION['auth']['id']);
 
                                     while ($row = mysqli_fetch_array($fetch_query)) {
                                     ?>
@@ -71,6 +69,7 @@ VALUES ( '$patient_id','$patient_name', '$gender', '$phone', '$date', '$dob', '$
                             <div class="form-group">
                                 <label for="patient_name">Patient Name:</label>
                                 <input type="text" class="form-control" id="patient_name" readonly name="patient_name" />
+                                <input type="hidden" class="form-control" id="patient_id" readonly name="patient_id" />
 
                             </div>
                         </div>
@@ -99,8 +98,8 @@ VALUES ( '$patient_id','$patient_name', '$gender', '$phone', '$date', '$dob', '$
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="date">Date Medical Records:</label>
-                                <div class="cal-icon">
-                                <input type="text" class="form-control datetimepicker" readonly id="date" name="date">
+                                <div class="cal-">
+                                    <input type="text" class="form-control datetimepicker" readonly id="date" name="date">
 
                                 </div>
                             </div>
@@ -181,7 +180,8 @@ include('footer.php');
                                     const data_patient = elem.data;
                                     $("#phone").val(data_patient.phone);
                                     $("#gender").val(data_patient.gender);
-                                }else{
+                                    $("#patient_id").val(data_patient.id);
+                                } else {
                                     swal({
                                         icon: 'error',
                                         title: 'patient data is lost',

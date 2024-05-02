@@ -6,7 +6,7 @@ if (empty($_SESSION['name'])) {
 include('header.php');
 
 $id = $_GET['id'];
-$fetch_query = mysqli_query($connection, "SELECT ta.id,ta.appointment_id, ta.patient_name, ta.patient_id, ta.doctor_id, ta.doctor, ta.department, ta.status AS ta_status, tap.status AS payment_status, ta.date, ta.time, ta.message, tap.sub_total FROM tbl_appointment AS ta INNER JOIN tbl_appointment_price AS tap ON ta.appointment_id = tap.appointment_id  where ta.id='$id'");
+$fetch_query = mysqli_query($connection, "SELECT ta.id,ta.appointment_id, ta.patient_name, ta.patient_id, ta.doctor_id, ta.doctor, ta.department, ta.status AS ta_status, tap.status AS payment_status, ta.date, ta.time, ta.message, tap.sub_total FROM tbl_appointment AS ta INNER JOIN tbl_appointment_price AS tap ON ta.id = tap.appointment_id  where ta.id='$id'");
 $row = mysqli_fetch_assoc($fetch_query);
 $appointment_id = $row['appointment_id'];
 
@@ -56,7 +56,7 @@ if (isset($_POST["submit-payment"])) {
     $json_data = json_encode($json_data);
     // Menyimpan transaksi ke database
 
-    $sql = "UPDATE  tbl_appointment_price SET `status`='NEED KONFIRMATION' WHERE appointment_id= '$appointment_id' ";
+    $sql = "UPDATE  tbl_appointment_price SET `status`='FINISH' WHERE appointment_id= '$appointment_id' ";
     $sql_tr = "INSERT INTO tbl_transaction set appointment_id='$appointment_id',date = '$date',tr_code='$kode_transaksi', status='PENDING', sub_total='$sub_total', data='$json_data' ";
     $rows = mysqli_query($connection, $sql);
     $query = mysqli_query($connection, $sql_tr);
@@ -86,11 +86,15 @@ if (isset($_POST["submit-payment"])) {
             <div class="col-lg-8 offset-lg-2">
                 <form action="#" class="card " method="POST" enctype="multipart/form-data">
                     <div class="card-body">
+                        <?php
+                        if($row['payment_status'] == 'FINISH'){
+                        ?>
                         <a href="print-invoice.php?id=<?= $id ?>">
                             <button type="button" class="btn btn-primary fa-address-book" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 Print Invoice
                             </button>
                         </a>
+                        <?php }?>
                         <div class="row border-bottom">
                             <div class="col-sm-6">
                                 <div class="form-group">
@@ -188,7 +192,7 @@ if (isset($_POST["submit-payment"])) {
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <img style="width: 100%;" src="<?= BASE_URL . "assets/uploads/" . $tbl_prices['file'] ?>" alt="QR CODE">
+                                            <img style="width: 100%;" src="<?= BASE_URL . "/assets/uploads/" . $tbl_prices['file'] ?>" alt="QR CODE">
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

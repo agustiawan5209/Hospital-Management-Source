@@ -8,7 +8,7 @@ $basePath = $_SERVER['DOCUMENT_ROOT'];
 require_once $basePath . '/includes/connection.php';
 
 $id = $_GET['id'];
-$fetch_query = mysqli_query($connection, "SELECT ta.id,ta.appointment_id, ta.patient_name, ta.patient_id, ta.doctor_id, ta.doctor, ta.department, ta.status AS ta_status, tap.status AS payment_status, ta.date, ta.time, ta.message, tap.sub_total FROM tbl_appointment AS ta INNER JOIN tbl_appointment_price AS tap ON ta.appointment_id = tap.appointment_id  where ta.id='$id'");
+$fetch_query = mysqli_query($connection, "SELECT ta.id,ta.appointment_id, ta.patient_name, ta.patient_id, ta.doctor_id, ta.doctor, ta.department, ta.status AS ta_status, tap.status AS payment_status, ta.date, ta.time, ta.message, tap.sub_total FROM tbl_appointment AS ta INNER JOIN tbl_appointment_price AS tap ON ta.id = tap.appointment_id  where ta.id='$id'");
 $row = mysqli_fetch_assoc($fetch_query);
 $appointment_id = $row['appointment_id'];
 
@@ -85,17 +85,12 @@ $data_tbl_tr = mysqli_fetch_assoc($tbl_tr);
     <div class="invoice-header">
         <h2 href="/"><img src="/assets/img/logo-dark.png" width="100"></h2>
         <h2 href="/" class="logo text-dark"></i> KLINIK <strong>MB</strong> </a>
+        <h3><?php echo $row['appointment_id'];  ?></h3>
     </div>
+
 
     <div class="invoice-details">
         <table>
-            <tr>
-                <td>Appointment ID:</td>
-                <td>
-                    <?php echo $row['appointment_id'];  ?>
-                </td>
-            </tr>
-
             <tr>
                 <td>Pasien:</td>
                 <?php

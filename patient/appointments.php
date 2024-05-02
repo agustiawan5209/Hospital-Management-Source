@@ -36,7 +36,7 @@ include('header.php');
                         $id = $_GET['ids'];
                         $delete_query = mysqli_query($connection, "update tbl_appointment set deleted_at = 1 where id='$id'");
                     }
-                    $fetch_query = mysqli_query($connection, "select * from tbl_appointment where patient_id=". $_SESSION['auth']['id']);
+                    $fetch_query = mysqli_query($connection, "select * from tbl_appointment where deleted_at = 0 and patient_id=". $_SESSION['auth']['id']);
                     while ($row = mysqli_fetch_array($fetch_query)) {
 
                         $time = strtotime($row['time']);

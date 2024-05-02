@@ -298,6 +298,11 @@ include('includes/connection.php');
                                 <span href="#"> Available Days : <i class="fas fa-calendar"></i> <?= $data_schedule['available_days'] ?> </span>
                             </div>
                         </div>
+                        <div class="content">
+                            <div class="icon">
+                                <span href="#"> Time Days : <i class="fas fa-calendar"></i> <?= $data_schedule['start_time'] .'-'. $data_schedule['end_time'] ?> </span>
+                            </div>
+                        </div>
                     <?php } else { ?>
                         <div class="content">
                             <div class="icon">

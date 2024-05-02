@@ -12,12 +12,6 @@ include('includes/connection.php');
             <div class="col-sm-4 col-3">
                 <h4 class="page-title">Transaction</h4>
             </div>
-            <?php
-            if ($_SESSION['role'] == 1) { ?>
-                <div class="col-sm-8 col-9 text-right m-b-20">
-                    <a href="add-appointment.php" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Transaction</a>
-                </div>
-            <?php } ?>
         </div>
         <div class="table-responsive">
             <table class="datatable table table-stripped ">
@@ -51,7 +45,7 @@ include('includes/connection.php');
                                 <div class="dropdown dropdown-action">
                                     <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="confirm-payment.php?ids=<?php echo $row['id']; ?>" onclick="return confirmDelete()"><i class="fa fa-eye m-r-5"></i> Show</a>
+                                        <a class="dropdown-item" href="confirm-payment.php?ids=<?php echo $row['id']; ?>" ><i class="fa fa-eye m-r-5"></i> Show</a>
                                     </div>
                                 </div>
                             </td>

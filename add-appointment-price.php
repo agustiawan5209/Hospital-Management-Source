@@ -107,7 +107,7 @@ if (isset($_REQUEST['add-appointment'])) {
                     <div class="form-group">
                         <label>Sub Total</label>
                         <div class="-icon">
-                            <input type="text" class="form-control" name="sub_total" required>
+                            <input type="number" class="form-control" name="sub_total" required>
                         </div>
                     </div>
                     <div class="mb-3 form-group">

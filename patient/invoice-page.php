@@ -33,7 +33,7 @@ include('header.php');
                         $id = $_GET['ids'];
                         $delete_query = mysqli_query($connection, "delete from tbl_appointment where id='$id'");
                     }
-                    $fetch_query = mysqli_query($connection, "SELECT ta.id, ta.appointment_id, ta.patient_name, ta.patient_id, ta.doctor_id, ta.doctor,ta.date, ta.department, ta.status AS ta_status, tap.status AS payment_status, tap.sub_total FROM tbl_appointment AS ta INNER JOIN tbl_appointment_price AS tap ON ta.appointment_id = tap.appointment_id WHERE ta.status = 1 AND ta.patient_id=" . $_SESSION['auth']['id']);
+                    $fetch_query = mysqli_query($connection, "SELECT ta.id, ta.appointment_id, ta.patient_name, ta.patient_id, ta.doctor_id, ta.doctor,ta.date, ta.department, ta.status AS ta_status, tap.status AS payment_status, tap.sub_total FROM tbl_appointment AS ta INNER JOIN tbl_appointment_price AS tap ON ta.id = tap.appointment_id WHERE ta.status = 1 AND ta.patient_id=" . $_SESSION['auth']['id']);
                     while ($row = mysqli_fetch_array($fetch_query)) {
 
 

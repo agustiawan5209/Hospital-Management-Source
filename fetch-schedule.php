@@ -19,7 +19,7 @@ $msg = [
 ];
 while ($row = mysqli_fetch_assoc($result)) {
     if(isset($row)){
-        if(11 < $row['sesi']){
+        if($appointment_count < $row['sesi']){
             $days = explode(", ", $row["available_days"]);
             foreach ($days as $day) {
                 $msg['options'] .= '<option value="' . $day . '(' . $row["start_time"] . '-' . $row["end_time"] . ')' . '">' . $day . ' (' . $row["start_time"] . '-' . $row["end_time"] . ')' . '</option>';
