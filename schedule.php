@@ -35,15 +35,15 @@ include('includes/connection.php');
                         $id = $_GET['ids'];
                         $delete_query = mysqli_query($connection, "delete from tbl_schedule where id='$id'");
                     }
-                    $fetch_query = mysqli_query($connection, "SELECT ts.id, te.first_name, te.last_name, ts.available_days, ts.start_time, ts.end_time, ts.message, ts.status, ts.created_at, te.department_name FROM `tbl_schedule` as ts INNER JOIN tbl_employee as te ON ts.doctor_id = te.id ");
+                    $fetch_query = mysqli_query($connection, "SELECT ts.id, te.first_name, te.last_name, ts.available_days, ts.start_time, ts.end_time, ts.message, ts.status, ts.created_at, ts.sesi, te.department_name FROM `tbl_schedule` as ts INNER JOIN tbl_employee as te ON ts.doctor_id = te.id ");
                     while ($row = mysqli_fetch_array($fetch_query)) {
                     ?>
                         <tr>
-                            <td><?php echo $row['first_name'] . " " . $row['last_name']; ?></td>
-                            <td><?php echo $row['department_name']; ?></td>
-                            <td><?php echo $row['available_days']; ?></td>
-                            <td><?php echo $row['sesi']; ?></td>
-                            <td><?php echo $row['start_time'] . ' - ' . $row['end_time']; ?></td>
+                            <td><?= $row['first_name'] . " " . $row['last_name']; ?></td>
+                            <td><?= $row['department_name']; ?></td>
+                            <td><?= $row['available_days']; ?></td>
+                            <td><?= $row['sesi']; ?></td>
+                            <td><?= $row['start_time'] . ' - ' . $row['end_time']; ?></td>
                             <?php if ($row['status'] == 1) { ?>
                                 <td><span class="custom-badge status-green">Active</span></td>
                             <?php } else { ?>
@@ -53,8 +53,8 @@ include('includes/connection.php');
                                 <div class="dropdown dropdown-action">
                                     <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="edit-schedule.php?id=<?php echo $row['id']; ?>"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                        <a class="dropdown-item" href="schedule.php?ids=<?php echo $row['id']; ?>" onclick="return confirmDelete()"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                        <a class="dropdown-item" href="edit-schedule.php?id=<?= $row['id']; ?>"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                        <a class="dropdown-item" href="schedule.php?ids=<?= $row['id']; ?>" onclick="return confirmDelete()"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                     </div>
                                 </div>
                             </td>

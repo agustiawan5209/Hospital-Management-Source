@@ -214,7 +214,16 @@ include('footer.php');
                 },
                 cache: false,
                 success: function(response) {
-                    $('#available_days').html(response);
+                    const elem = JSON.parse(response)
+                    if (elem.status !== true) {
+                        swal('Maaf Antria Sudah Penuh atau tidak Tersedia')
+                        $('#appointment_id').val(null);
+                        $('#appointment_id').val(null);
+                        $('#department').val(null);
+                        $('#date_appointment').val(null);
+                        $('#patient_name').val(null);
+                    }
+                    $('#available_days').html(elem.options);
                 }
             });
         });

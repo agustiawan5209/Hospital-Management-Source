@@ -27,15 +27,14 @@ if (isset($_REQUEST['add-appointment'])) {
     if ($app_price) {
         $insert_query = mysqli_query($connection, "insert into tbl_appointment set appointment_id='$appointment_id', patient_id='$patient_id',patient_name='$patient_name', available_days='$available_days', department='$department', doctor='$doctor[1]',doctor_id='$doctor[0]',  date='$date',  time='$time', message='$message', status='$status'");
 
-    if ($insert_query > 0) {
-        $msg = "Appointment created successfully";
-    } else {
-        $msg = "Error!";
-    }
+        if ($insert_query > 0) {
+            $msg = "Appointment created successfully";
+        } else {
+            $msg = "Error!";
+        }
     } else {
         $msg = "Cannot Add Appointment : Appoinment could not be held because the price had not been determined";
     }
-    
 }
 function makeAppointmentPrice($appointment_id, $connection, $doctor_id)
 {
@@ -89,7 +88,7 @@ function makeAppointmentPrice($appointment_id, $connection, $doctor_id)
                         </div>
                     </div>
                     <div class="row">
-                        
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Date</label>
@@ -133,13 +132,13 @@ function makeAppointmentPrice($appointment_id, $connection, $doctor_id)
                             </div>
                         </div>
                         <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Available Days</label>
-                                        <select class="select" name="available_days" id="available_days" required>
-                                            <option value="">Select Available Days</option>
-                                        </select>
-                                    </div>
-                                </div>
+                            <div class="form-group">
+                                <label>Available Days</label>
+                                <select class="select" name="available_days" id="available_days" required>
+                                    <option value="">Select Available Days</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="row">
@@ -186,9 +185,10 @@ include('footer.php');
 ?>
 <script type="text/javascript">
     $(document).ready(function() {
-        $("#patient_name").change(function(){
+        $("#patient_name").change(function() {
             getAppoinmentID();
         })
+
         function getAppoinmentID() {
             var selectedOption = $('#department').val();
             var inputValue = $('#date_appointment').val();
@@ -249,7 +249,16 @@ include('footer.php');
                 },
                 cache: false,
                 success: function(response) {
-                    $('#available_days').html(response);
+                    const elem = JSON.parse(response)
+                    if (elem.status !== true) {
+                        swal('Maaf Antria Sudah Penuh atau tidak Tersedia')
+                        $('#appointment_id').val(null);
+                        $('#appointment_id').val(null);
+                        $('#department').val(null);
+                        $('#date_appointment').val(null);
+                        $('#patient_name').val(null);
+                    }
+                    $('#available_days').html(elem.options);
                 }
             });
         });

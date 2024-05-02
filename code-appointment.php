@@ -7,6 +7,7 @@ $selected_department = $_POST['department'];
 $date = $_POST['date'];
 $role_id = $_SESSION['auth']['id'];
 $apt_id = null;
+// Add Doctor ID
 if (isset($_POST['patient_id'])) {
     $role_id = $_POST['patient_id'];
 }
