@@ -15,13 +15,18 @@ if (isset($_REQUEST['add-schedule'])) {
     $status = $_REQUEST['status'];
     $sesi = $_REQUEST['sesi'];
 
+    $table = mysqli_query($connection, "SELECT * FROM tbl_schedule WHERE doctor_id='$doctor_id'");
 
-    $insert_query = mysqli_query($connection, "insert into tbl_schedule set doctor_id='$doctor_id', available_days='$days', start_time='$start_time', end_time='$end_time', sesi='$sesi', message='$message', status='$status'");
+    if (mysqli_num_rows($table) < 1) {
+        $insert_query = mysqli_query($connection, "insert into tbl_schedule set doctor_id='$doctor_id', available_days='$days', start_time='$start_time', end_time='$end_time', sesi='$sesi', message='$message', status='$status'");
 
-    if ($insert_query > 0) {
-        $msg = "Schedule created successfully";
-    } else {
-        $msg = "Error!";
+        if ($insert_query > 0) {
+            $msg = "Schedule created successfully";
+        } else {
+            $msg = "Error!";
+        }
+    }else{
+        $msg = "Schedule Exists";
     }
 }
 ?>
@@ -49,7 +54,7 @@ if (isset($_REQUEST['add-schedule'])) {
                                     $fetch_query = mysqli_query($connection, "select id, concat(first_name,' ', last_name, '-', department_name) as doctor_department from tbl_employee where role=2");
                                     while ($row = mysqli_fetch_array($fetch_query)) {
                                     ?>
-                                        <option value="<?= $row['id']?>"><?php echo $row['doctor_department']; ?></option>
+                                        <option value="<?= $row['id'] ?>"><?php echo $row['doctor_department']; ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -73,7 +78,7 @@ if (isset($_REQUEST['add-schedule'])) {
                             <div class="form-group">
                                 <label>Maximal Doctor Appointment per Day </label>
                                 <div class="time-icon">
-                                    <input type="number" class="form-control"  name="sesi" required>
+                                    <input type="number" class="form-control" name="sesi" required>
                                 </div>
                             </div>
                         </div>
@@ -115,7 +120,7 @@ if (isset($_REQUEST['add-schedule'])) {
                             </label>
                         </div>
                     </div>
-                    
+
                     <div class="m-t-20 text-center">
                         <button class="btn btn-primary submit-btn" name="add-schedule">Create Schedule</button>
                     </div>
@@ -130,7 +135,7 @@ include('footer.php');
 ?>
 <script type="text/javascript">
     <?php
-     if (isset($msg)) {
+    if (isset($msg)) {
         echo 'swal({
             icon: "success",
             title: "success",

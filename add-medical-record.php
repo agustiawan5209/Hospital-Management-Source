@@ -6,7 +6,7 @@ if (empty($_SESSION['name'])) {
 include('header.php');
 include('includes/connection.php');
 
-if (isset($_REQUEST['add-patient'])) {
+if (isset($_REQUEST['add-medical'])) {
 
     $id_patient = $_POST['patient_name'];
     $query = mysqli_query($connection, "SELECT id, concat(first_name, ' ', last_name) as patient_name FROM tbl_patient WHERE id='$id_patient'");
@@ -139,7 +139,7 @@ VALUES ( '$patient_id','$patient_name', '$gender', '$phone', '$date', '$dob', '$
 
                     <div class="m-t-20 text-center">
 
-                        <button name="add-patient" class="btn btn-primary submit-btn">Create Patient</button>
+                        <button name="add-medical" class="btn btn-primary submit-btn">Create Medical Record</button>
                     </div>
                 </form>
 
